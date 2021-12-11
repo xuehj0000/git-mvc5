@@ -149,6 +149,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\SysMenuController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SysRoleController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SysUserController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filter\CustomControllerFactory.cs" />
@@ -343,12 +347,19 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\SysUser\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\SysRole\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\SysMenu\Index.cshtml" />
     <None Include="CfgFiles\Unity.Config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
