@@ -99,7 +99,7 @@ namespace Auth.Service
             return this.myContext.Set<T>().Find(id);
         }
 
-        public IQueryable<T> Query<T>(Expression<Func<T, bool>> exps) where T : class
+        public IQueryable<T> Query<T>(Expression<Func<T, bool>> exps=null) where T : class
         {
             if (exps == null)
                 return this.myContext.Set<T>();

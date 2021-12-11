@@ -12,7 +12,6 @@
     @Html.Partial("Header")
     <div class="page-container">
         @Html.Partial("SideMenu")
-
         <div class="page-content-wrapper">
             <div class="page-content">
                 @Html.Partial("PageHeader")
@@ -22,16 +21,36 @@
         </div>
     </div>
     @Html.Partial("Footer")
-
-
-
-    <div class="page-container">
-       
-        
-    </div>
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        @{ 
+            var crumbsId = new List<string>() { "0", "0" };
+            var crubbsList = (List<string>)Context.Session["CurrentMenu"];
+            if(crubbsList!= null && crubbsList.Count() > 0)
+            {
+                crumbsId = crubbsList;
+            }
+        }
+        $(function () {
+            InitSelectMenu('@crumbsId[1]', '@crumbsId[0]');
+
+        })
+
+        function FoldMenue(e) {
+            if ($(e).hasClass("open")) {
+                $(e).removeClass("open");
+                var ul = $(e).find("ul");
+                $(ul).attr("style", "display:block;");
+            } else {
+                $(e).addClass("open");
+                var ul = $(e).find("ul");
+                $(ul).attr("style", "display:none;");
+            }
+        }
+
+
+    </script>
 </body>
 </html>

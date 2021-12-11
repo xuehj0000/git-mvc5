@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Web.Mvc;
@@ -12,9 +13,11 @@ namespace Auth.Web.Controllers
     public class AccountController : Controller
     {
         private readonly ISysUserService _userService;
-        public AccountController(ISysUserService userService)
+        private readonly ISysMenuService _menuService;
+        public AccountController(ISysUserService userService, ISysMenuService menuService)
         {
             _userService = userService;
+            _menuService = menuService;
         }
 
         #region 
@@ -51,6 +54,13 @@ namespace Auth.Web.Controllers
                 if (curUser != null)
                 {
                     HttpContext.Session["CurrentUser"] = curUser;
+
+                    var tuples = new List<Tuple<string, string, string>>();
+                    var menus = _menuService.GetSubMenu(curUser.Id, out tuples);
+
+                    curUser.CurrentMenu = menus;
+
+
                     return Redirect("/Home/Index");
                 }
                 else

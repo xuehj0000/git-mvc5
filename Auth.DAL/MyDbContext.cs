@@ -1,3 +1,4 @@
+using Auth.DAL.Entitys;
 using System.Data.Entity;
 
 namespace Auth.DAL
@@ -10,6 +11,7 @@ namespace Auth.DAL
 
 
         public virtual DbSet<SysUser> SysUser { get; set; }
+        public virtual DbSet<SysMenu> SysMenu { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

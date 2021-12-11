@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Auth.DAL
 {
@@ -19,5 +16,9 @@ namespace Auth.DAL
         public string Mobile { get; set; }
 
         public string Email { get; set; }
+
+        public object CurrentMenu { get; set; }
+
+        public List<Tuple<string, string ,string>> TupMenu { get; set; }
     }
 }
