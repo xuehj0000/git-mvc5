@@ -1,0 +1,80 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.Title = "登录";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>权限管理系统</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <link rel="stylesheet" type="text/css" href="~/Content/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/components-rounded.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/plugins.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/login-4.css" />
+    <link rel="shortcut icon" href="favicon.ico" />
+</head>
+<body class="login">
+    <div class="login">
+        <div class="logo">
+            <img src="~/Content/images/1.jpg" style="width:300px;height:70px" />
+        </div>
+        <div class="content">
+            @using Auth.DAL.ViewEntitys
+            @model RegisterUser
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "from" }))
+            {
+                @Html.AntiForgeryToken() <!-- 每次生成页面token key,避免重复提交 -->
+                <h3 class="form-title">注册账户</h3>
+                <div class="alert alert-danger display-hide">
+                    <button class="close" data-close="alert"></button>
+                    <span>@ViewBag.Message</span>
+                    @Html.ValidationSummary(true)  <!--指定验证-->
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Name, new { @class = "control-label visible-ie8 visible-ie9" })
+                    <div class="input-icon">
+                        <i class="fa fa-user"></i>
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control placeholder-no-fix", @type = "text", @autocomplete = "off", @placeholder = "请输入用户名" })
+                        @Html.ValidationMessage("Name", new { @style = "color:red" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "control-label visible-ie8 visible-ie9" })
+                    <div class="input-icon">
+                        <i class="fa fa-lock"></i>
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control placeholder-no-fix", @autocomplete = "off", @placeholder = "请输入密码" })
+                        @Html.ValidationMessage("Password", new { @style = "color:red" })
+                        @Html.ValidationMessage("failed", new { @style = "color:red" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.NewPassword, new { @class = "control-label visible-ie8 visible-ie9" })
+                    <div class="input-icon">
+                        <i class="fa fa-lock"></i>
+                        @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control placeholder-no-fix", @autocomplete = "off", @placeholder = "请输入密码" })
+                        @Html.ValidationMessage("NewPassword", new { @style = "color:red" })
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" onclick="javascript: location.href='Login'" class="btn red btn-outline">回退</button>
+                    <button type="submit" class="btn green pull-right">注册</button>
+                </div>
+            }
+        </div>
+    </div>
+    
+    <div class="copyright"> 2014 &copy; Metronic - Admin Dashboard Template. </div>
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script>
+        function refresh(obj) {
+            $(obj).attr("src", "/Account/verifyCode?random=" + Math.random());
+        }
+    </script>
+</body>
+</html>
