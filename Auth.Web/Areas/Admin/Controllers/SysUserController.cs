@@ -1,10 +1,9 @@
-﻿using Auth.Common;
-using Auth.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
 using System.Web.Mvc;
+using Auth.Common;
+using Auth.Interface;
+using Auth.Web.Filter;
+
 
 namespace Auth.Web.Areas.Admin.Controllers
 {
@@ -17,7 +16,7 @@ namespace Auth.Web.Areas.Admin.Controllers
         }
 
 
-        // GET: Admin/User
+        [CrumbsActionFilterAttribute]
         public ActionResult Index()
         {
             return View();

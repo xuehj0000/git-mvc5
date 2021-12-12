@@ -1,19 +1,26 @@
 ﻿@using Auth.DAL;
 @using Auth.DAL.ViewEntitys;
-@{ 
+@using Auth.Common;
+@{
     var curUser = Context.Session["CurrentUser"];
     var menuList = new List<MenuDto>();
-    if(curUser != null && curUser is SysUser) 
+    if (curUser != null && curUser is SysUser)
     {
         menuList = (curUser as SysUser).CurrentMenu as List<MenuDto>;
     }
-}
 
+    var crumbsId = new List<string>() { "0", "0" };
+    var crumbsList = (List<string>)Context.Session[CacheConstant.CacheCurrentCrumbs()];
+    if (crumbsList != null && crumbsList.Count > 0)
+    {
+        crumbsId = crumbsList;
+    }
+}
 
 <div class="page-sidebar-wrapper">
     <div class="page-sidebar navbar-collapse collapse">
         <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
-            @foreach(var item in menuList)
+            @foreach (var item in menuList)
             {
                 <li dir="@item.Id" class="nav-item open" onclick="FoldMenue(this)">
                     <a href="javascript:;" class="nav-link nav-toggle">
@@ -22,9 +29,9 @@
                         <span class="arrow"></span>
                     </a>
                     <ul class="sub-menu">
-                        @if(item.ChildMenu != null && item.ChildMenu.Count() > 0)
+                        @if (item.ChildMenu != null && item.ChildMenu.Count() > 0)
                         {
-                            foreach(var subItem in item.ChildMenu)
+                            foreach (var subItem in item.ChildMenu)
                             {
                                 <li dir="@subItem.Id" class="nav-item">
                                     <a href="@subItem.Url?crumbId=@subItem.Id _@item.Id" class="nav-link">
@@ -40,3 +47,38 @@
         </ul>
     </div>
 </div>
+
+@section scripts{
+    <script>
+        $(function () {
+            InitSelectMenu('@crumbsId[1]', '@crumbsId[0]');
+        })
+
+        function FoldMenue(e) {
+            if ($(e).hasClass("open")) {
+                $(e).removeClass("open");
+                var ul = $(e).find("ul");
+                $(ul).attr("style", "display:block;");
+            } else {
+                $(e).addClass("open");
+                var ul = $(e).find("ul");
+                $(ul).attr("style", "display:none;");
+            }
+        }
+
+        // 初始化菜单
+        function InitSelectMenu(parentId, currentId) {
+            var lis = $(".page-sidebar-menu").children();
+            lis.each(function (index, item) {
+                if ($(item).attr("dir") == parentId) {
+
+                    if ($(item).hasClass("open")) {
+                        $(item).removeClass("open");
+                        let ul = $(item).find("ul");
+                        $(ul).attr("style", "display:block;");
+                    }
+                }
+            })
+        }
+    </script>
+}

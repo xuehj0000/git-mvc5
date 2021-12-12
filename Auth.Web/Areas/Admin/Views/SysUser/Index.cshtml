@@ -86,7 +86,22 @@
                             `;
                         }
                     }
-                ]
+                ],
+                events: {
+                    'click a[title=删除]': function (e, value, row, index) {
+                        if (confirm('确认删除?')) {
+                            var id = row.Id;
+                            $.ajax({
+                                url: "delete",
+                                data: { id: id },
+                                method: "get",
+                                success: function (result) {
+                                    $("#table").bootstrapTable("refresh");
+                                }
+                            })
+                        }
+                    }
+                }
             })
         }
 
