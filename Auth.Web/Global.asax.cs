@@ -1,4 +1,6 @@
+using Auth.DAL;
 using Auth.Web.Filter;
+using FluentNHibernate.Automapping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +21,10 @@ namespace Auth.Web
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             ControllerBuilder.Current.SetControllerFactory(new CustomControllerFactory());  // 给mvc 框架设置一个控制器工厂
+            AutoMapper.Mapper.Initialize(config =>
+            {
+                config.AddProfile(new AutoMapperConfig());
+            });
         }
     }
 }

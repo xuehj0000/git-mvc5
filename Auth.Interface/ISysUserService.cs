@@ -1,4 +1,6 @@
-﻿using Auth.DAL;
+﻿using Auth.Common;
+using Auth.DAL;
+using Auth.DAL.Entitys;
 using Auth.DAL.ViewEntitys;
 using System;
 using System.Collections.Generic;
@@ -16,5 +18,7 @@ namespace Auth.Interface
         bool Exist(Expression<Func<SysUser, bool>> exps);
 
         bool Register(RegisterUser user);
+
+        PageResult<SysUserDto> Search(PageQuery query);
     }
 }

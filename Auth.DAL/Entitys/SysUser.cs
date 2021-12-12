@@ -17,6 +17,8 @@ namespace Auth.DAL
 
         public string Email { get; set; }
 
+        public DateTime CreateDate { get; set; }
+
         public object CurrentMenu { get; set; }
 
         public List<Tuple<string, string ,string>> TupMenu { get; set; }

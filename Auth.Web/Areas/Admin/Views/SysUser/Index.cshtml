@@ -1,1 +1,63 @@
-﻿用户视图
+﻿@{ 
+    ViewBag.Title = "用户管理";
+}
+
+<link href="~/Content/bootstrap-table.min.css" />
+<h3>用户管理</h3>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light portlet-fit portlet-datatable bordered">
+            <div class="portlet-body">
+                <div class="table-container">
+                    <table id="table"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/Content/bootstrap-table/bootstrap-table.js"></script>
+    <script src="~/Content/bootstrap-table/bootstrap-table-zh-CN.js"></script>
+    <script>
+        $(function () {
+            Init();
+        })
+
+        function Init() {
+            $("#table").bootstrapTable({
+                URL: '/User/Search',
+                dataField: "rows",
+                search: true,
+                pagination: true,
+                pageSize: 10,
+                pageList: [5, 10, 50, 100],
+                sidePagination: "server",
+                contentType: "application/json",
+                dataType: "json",
+                method: "post",
+                searchAlign: "left",
+                queryParamsType: "limit",
+                queryParams: function getParams(params) {
+                    var temp = {
+                        PageSize: params.limit,
+                        PageIndex: (params.offset / params.limit) + 1,
+                        Order: params.order,
+                        Sort: params.sort,
+                        Search: params.search
+                    };
+                    return temp;
+                },
+                searchOnEnterKey: Ifalse,
+                showRefresh: true,
+                showColumns: true,
+                buttonsAlign: "left",
+                toolbar: "#toolbar",
+                toolbarAlign: "right",
+                columns: [{
+
+                }]
+            })
+        }
+
+    </script>
+}

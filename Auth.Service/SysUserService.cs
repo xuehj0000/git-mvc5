@@ -1,8 +1,12 @@
 ﻿using Auth.Common;
+using Auth.Common.Extensions;
 using Auth.DAL;
+using Auth.DAL.Entitys;
 using Auth.DAL.ViewEntitys;
 using Auth.Interface;
+using AutoMapper;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -33,6 +37,29 @@ namespace Auth.Service
             model.Password = user.Password.ToMd5();
             base.Insert<SysUser>(model);
             return true;
+        }
+
+        public PageResult<SysUserDto> Search(PageQuery query)
+        {
+            Expression<Func<SysUser, bool>> exps = null;
+            if (!string.IsNullOrWhiteSpace(query.Search))
+                exps = exps.And(r => r.Name.Contains(query.Search));
+
+            bool isAsc = false;
+            if (query.Order.Equals("asc"))
+            {
+                isAsc = true;
+            }
+            var pageResult = QueryPage(exps, query.PageSize, query.PageIndex, r => r.CreateDate, isAsc);
+
+            
+
+
+            return new PageResult<SysUserDto>()
+            {
+                Total = pageResult.Total,
+                Rows = Mapper.Map<List<SysUser>, List<SysUserDto>>(pageResult.Rows)
+            };
         }
     }
 }
