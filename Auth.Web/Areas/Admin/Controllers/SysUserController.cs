@@ -29,7 +29,12 @@ namespace Auth.Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Search(PageQuery query)
         {
-
+            var result = _userService.Search(query);
+            return new JsonResult()
+            {
+                Data = result,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
         }
     }
 }

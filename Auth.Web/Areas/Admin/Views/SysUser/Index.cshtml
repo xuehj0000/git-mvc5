@@ -24,9 +24,10 @@
         })
 
         function Init() {
+            debugger;
             $("#table").bootstrapTable({
-                URL: '/User/Search',
-                dataField: "rows",
+                url: "/Admin/SysUser/Search",
+                dataField: "Rows",
                 search: true,
                 pagination: true,
                 pageSize: 10,
@@ -38,24 +39,54 @@
                 searchAlign: "left",
                 queryParamsType: "limit",
                 queryParams: function getParams(params) {
-                    var temp = {
+                    return {
                         PageSize: params.limit,
                         PageIndex: (params.offset / params.limit) + 1,
                         Order: params.order,
                         Sort: params.sort,
                         Search: params.search
                     };
-                    return temp;
                 },
-                searchOnEnterKey: Ifalse,
+                searchOnEnterKey: false,
                 showRefresh: true,
                 showColumns: true,
                 buttonsAlign: "left",
                 toolbar: "#toolbar",
                 toolbarAlign: "right",
-                columns: [{
-
-                }]
+                columns: [
+                    {
+                        title: "全选",
+                        field: "select",
+                        checkbox: true,
+                        width: 20,
+                        align: "center",
+                        valign:"middle"
+                    },
+                    {
+                        field:"Name",
+                        title: "用户名",
+                        sortable: true,
+                        titleTooltip:"用户名"
+                    },
+                    {
+                        field: 'operator',
+                        title: "操作",
+                        align: "",
+                        valign: "",
+                        formatter: function (value, row, index) {
+                            return `<a href="#" data-toggle="modal" title="设置角色">
+                                        <i class="glyphicon glyphicon-wrench"></i>
+                                    </a>
+                                    <a href="#editProject" data-goggle="modal" title="修改">
+                                        <i class="glyphicon glyphicon-pencil"></i>
+                                    </a>
+                                    <a href="javascript:void(0)" title="删除">
+                                        <i class="glyphicon glyphicon-trash text-danger"></i>
+                                    </a>
+                            `;
+                        }
+                    }
+                ]
             })
         }
 

@@ -46,7 +46,8 @@ namespace Auth.Service
                 exps = exps.And(r => r.Name.Contains(query.Search));
 
             bool isAsc = false;
-            if (query.Order.Equals("asc"))
+            
+            if (!string.IsNullOrEmpty(query.Order) && query.Order.Equals("asc"))
             {
                 isAsc = true;
             }
